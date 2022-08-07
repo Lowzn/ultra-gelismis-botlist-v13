@@ -1,0 +1,19 @@
+{
+  "name": "Botlist",
+  "version": "5.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Ly3ssia",
+  "license": "ISC",
+  "dependencies": {
+    "croxydb": "^0.0.7",
+    "discord.js": "^13.6.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
