@@ -50,6 +50,10 @@ Uygulama Onay Durumu: **[${DBL}](https://top.gg/bot/${ClientID})**`)
        .setLabel("Bot Ekle")
        .setURL(`https://discord.com/oauth2/authorize?scope=bot&permissions=0&client_id=${ClientID}&guild_id=${message.guild.id}`),
 	 new Discord.MessageButton()
+	 .setLabel("Kabul Et")
+	 .setStyle("SUCCESS")
+	 .setCustomId("kabul"),
+	   new Discord.MessageButton()
 	 .setStyle("DANGER")
 	 .setLabel("Reddet")
 	 .setCustomId("reddet")  
@@ -64,9 +68,10 @@ const sd = new Discord.MessageEmbed()
 .setTitle("Bot Ekletildi!")
 .setDescription(`**${message.author} Adlı Kullanıcı \`${User.tag}\` Adlı Botunun Sisteme Onaylanması İçin Başvurdu!**`)
 .setColor("RANDOM")
+console.log(User.id)
 client.channels.cache.get(botlog).send({embeds: [sd]})
 client.channels.cache.get(onaykanal).send({components: [row], embeds: [nova], content: `<@&${mod}>`}).then(radio => {
-	db.set(`mesaj${message.guild.id}`, radio.id)
+	
 db.set(`Bilgi_${radio.id}`,{Client: ClientID , Gönderen: message.author.id})
 db.set(`BOT_${message.author.id}`,ClientID)
 db.set(`Ekledi_${ClientID}`,message.author.id)
@@ -74,8 +79,19 @@ db.set(`Sahip_${ClientID}`,message.author.id)
     radio.createMessageComponentCollector(user => user.clicker.user.id == message.author.id).on('collect', async (button) => {
       let interaction = button
         if (interaction.customId == "reddet") {
-radio.delete()
+			if(!interaction.guild.members.cache.get(interaction.user.id)?.permissions.has("ADMINISTRATOR")) return interaction.reply({content: "Bu butonu kullanabilmek için Yönetici yetkisine sahip olmalısın!", ephemeral: true});
+			radio.delete()
 client.channels.cache.get(botlog).send(`${message.author} Adlı Kullanıcının ${User.tag} Adlı Botu Reddedildi!`)
+}
+if (interaction.customId == "kabul") {
+	if(!interaction.guild.members.cache.get(interaction.user.id)?.permissions.has("ADMINISTRATOR")) return interaction.reply({content: "Bu butonu kullanabilmek için Yönetici yetkisine sahip olmalısın!", ephemeral: true});
+	radio.delete()
+	client.channels.cache.get(botlog).send(`**${message.author}** Adlı Kullanıcının \`${User.tag}\` Adlı Onay Bekleyen Botu Kabul Edildi!`)
+	message.guild.members.cache.get(message.author.id).roles.add(developer)
+	message.guild.members.cache.get(User.id).roles.add(botrol)
+
+
+
 }
 })
 })
