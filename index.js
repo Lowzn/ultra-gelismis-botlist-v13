@@ -41,8 +41,9 @@ client.on('guildMemberRemove', async member => {
 const BOTDurum = await db.fetch(`BOT_${member.id}`)
 if (BOTDurum) {
 client.users.fetch(BOTDurum).then(async(User) => {
+   let botlog = db.fetch(`botlog_${member.guild.id}`)
 member.guild.members.ban(await db.fetch(`BOT_${member.id}`), {reason: 'Sahibi pkklı oruspu çocuğu ateist vatan haini terorist piç anne sütü emen amcı oruspu çocuğu olduğu için banladım.'})
-client.channels.cache.get(ayarlar.BOTLog).send(`\`${member.user.tag}\` Sunucudan Ayrıldı. \`${User.tag}\` Adındaki Botu Atıldı!`
+client.channels.cache.get(botlog).send(`\`${member.user.tag}\` Sunucudan Ayrıldı. \`${User.tag}\` Adındaki Botu Atıldı!`
 )
 db.delete(`BOT_${member.id}`)
 })
