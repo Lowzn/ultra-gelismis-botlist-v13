@@ -79,12 +79,12 @@ db.set(`Sahip_${ClientID}`,message.author.id)
     radio.createMessageComponentCollector(user => user.clicker.user.id == message.author.id).on('collect', async (button) => {
       let interaction = button
         if (interaction.customId == "reddet") {
-			if(!interaction.guild.members.cache.get(interaction.user.id)?.permissions.has("ADMINISTRATOR")) return interaction.reply({content: "Bu butonu kullanabilmek için Yönetici yetkisine sahip olmalısın!", ephemeral: true});
+			if(!interaction.guild.members.cache.get(interaction.user.id)?.roles.cache.has(mod)) return interaction.reply({content: `Bu butonu kullanabilmek için <@&${mod}> rolüne sahip olmalısın!`, ephemeral: true});
 			radio.delete()
 client.channels.cache.get(botlog).send(`${message.author} Adlı Kullanıcının ${User.tag} Adlı Botu Reddedildi!`)
 }
 if (interaction.customId == "kabul") {
-	if(!interaction.guild.members.cache.get(interaction.user.id)?.permissions.has("ADMINISTRATOR")) return interaction.reply({content: "Bu butonu kullanabilmek için Yönetici yetkisine sahip olmalısın!", ephemeral: true});
+		if(!interaction.guild.members.cache.get(interaction.user.id)?.roles.cache.has(mod)) return interaction.reply({content: `Bu butonu kullanabilmek için <@&${mod}> rolüne sahip olmalısın!`, ephemeral: true});
 	radio.delete()
 	client.channels.cache.get(botlog).send(`**${message.author}** Adlı Kullanıcının \`${User.tag}\` Adlı Onay Bekleyen Botu Kabul Edildi!`)
 	message.guild.members.cache.get(message.author.id).roles.add(developer)
