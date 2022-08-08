@@ -72,10 +72,7 @@ console.log(User.id)
 client.channels.cache.get(botlog).send({embeds: [sd]})
 client.channels.cache.get(onaykanal).send({components: [row], embeds: [nova], content: `<@&${mod}>`}).then(radio => {
 	
-db.set(`Bilgi_${radio.id}`,{Client: ClientID , Gönderen: message.author.id})
-db.set(`BOT_${message.author.id}`,ClientID)
-db.set(`Ekledi_${ClientID}`,message.author.id)
-db.set(`Sahip_${ClientID}`,message.author.id)
+
     radio.createMessageComponentCollector(user => user.clicker.user.id == message.author.id).on('collect', async (button) => {
       let interaction = button
         if (interaction.customId == "reddet") {
@@ -84,6 +81,10 @@ db.set(`Sahip_${ClientID}`,message.author.id)
 client.channels.cache.get(botlog).send(`${message.author} Adlı Kullanıcının ${User.tag} Adlı Botu Reddedildi!`)
 }
 if (interaction.customId == "kabul") {
+	db.set(`Bilgi_${radio.id}`,{Client: ClientID , Gönderen: message.author.id})
+	db.set(`BOT_${message.author.id}`,ClientID)
+	db.set(`Ekledi_${ClientID}`,message.author.id)
+	db.set(`Sahip_${ClientID}`,message.author.id)
 		if(!interaction.guild.members.cache.get(interaction.user.id)?.roles.cache.has(mod)) return interaction.reply({content: `Bu butonu kullanabilmek için <@&${mod}> rolüne sahip olmalısın!`, ephemeral: true});
 	radio.delete()
 	client.channels.cache.get(botlog).send(`**${message.author}** Adlı Kullanıcının \`${User.tag}\` Adlı Onay Bekleyen Botu Kabul Edildi!`)
