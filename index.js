@@ -21,26 +21,13 @@ if (message.channel.id == boteklemekanali && message.author.id !== client.user.i
 })
 
 client.on('guildMemberAdd', async (member) => {
-    let onaykanal = db.fetch(`botmod_${member.guild.id}`)
-    let developer = db.fetch(`gelistirici_${member.guild.id}`)
-    let botlog = db.fetch(`botlog_${member.guild.id}`)
-    let botrol = db.fetch(`verifiedbot_${member.guild.id}`)
-    
+ 
 
 if (member.user.bot && db.has(`Ekledi_${member.id}`)) {
 
-
-db.delete(`Bilgi_${REmbed.first().id}`)
-
 }
-const BOTEkleyen = await db.fetch(`Ekledi_${member.id}`)
-client.channels.cache.get(botlog).send(`**<@${BOTEkleyen}> Adlı Kullanıcının \`${client.users.cache.get(member.id).tag}\` Adlı Onay Bekleyen Botu Kabul Edildi!`)
-const Log = await member.guild.fetchAuditLogs({type: 'BOT_ADD'}).then(Audit => Audit.entries.first())
-member.guild.members.cache.get(BOTEkleyen).roles.add(developer)
 
-db.add(`Count_${Log.executor.id}`,1)
-db.delete(`Durum_${member.id}`)
-member.roles.add(botrol) 
+
 
 }
 )
